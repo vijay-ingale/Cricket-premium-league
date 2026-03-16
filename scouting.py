@@ -257,3 +257,125 @@ class ScoutingManager:
                 "form": self.get_player_form_tag(best_name)
             }
         return "", {}
+
+    def generate_strategy(self, my_team: str, opponent_team: str) -> Dict:
+        """Generate winning strategy against opponent team."""
+        my_players = self.get_team_players(my_team)
+        opp_players = self.get_team_players(opponent_team)
+
+        # Analyze opponent batsmen
+        opp_batsmen = []
+        for p in opp_players:
+            bat = self.get_player_batting_stats(p)
+            bowl = self.get_player_bowling_stats(p)
+            form = self.get_player_form_tag(p)
+            opp_batsmen.append({"name": p, "bat": bat, "bowl": bowl, "form": form})
+
+        # Analyze my team
+        my_stats = []
+        for p in my_players:
+            bat = self.get_player_batting_stats(p)
+            bowl = self.get_player_bowling_stats(p)
+            form = self.get_player_form_tag(p)
+            my_stats.append({"name": p, "bat": bat, "bowl": bowl, "form": form})
+
+        # Opponent danger batsmen (sorted by total runs)
+        danger_batsmen = sorted(opp_batsmen, key=lambda x: x["bat"]["total_runs"], reverse=True)
+        danger_batsmen = [d for d in danger_batsmen if d["bat"]["total_runs"] > 0]
+
+        # Opponent weak batsmen
+        weak_batsmen = [d for d in opp_batsmen if d["bat"]["total_runs"] == 0 or d["bat"]["avg_sr"] < 100]
+
+        # Opponent best bowlers (sorted by economy, lower is better)
+        opp_bowlers_active = [d for d in opp_batsmen if d["bowl"]["total_overs"] > 0]
+        opp_best_bowlers = sorted(opp_bowlers_active, key=lambda x: x["bowl"]["avg_econ"])
+        opp_weak_bowlers = sorted(opp_bowlers_active, key=lambda x: x["bowl"]["avg_econ"], reverse=True)
+
+        # My best batsmen
+        my_best_batsmen = sorted(my_stats, key=lambda x: x["bat"]["total_runs"], reverse=True)
+        my_best_batsmen = [d for d in my_best_batsmen if d["bat"]["total_runs"] > 0]
+
+        # My best bowlers
+        my_bowlers_active = [d for d in my_stats if d["bowl"]["total_overs"] > 0]
+        my_best_bowlers = sorted(my_bowlers_active, key=lambda x: x["bowl"]["avg_econ"])
+        my_wicket_takers = sorted(my_bowlers_active, key=lambda x: x["bowl"]["total_wickets"], reverse=True)
+
+        # Key wickets to target
+        key_wickets = danger_batsmen[:3]
+
+        # Bowlers to target for runs
+        target_bowlers = opp_weak_bowlers[:2] if opp_weak_bowlers else []
+
+        # Bowlers to be careful against
+        careful_bowlers = opp_best_bowlers[:2] if opp_best_bowlers else []
+
+        # Generate batting tips
+        batting_tips = []
+        if target_bowlers:
+            names = ", ".join(t["name"] for t in target_bowlers)
+            batting_tips.append(f"🎯 Target {names} for runs — weakest economy in opponent bowling")
+        if careful_bowlers:
+            for b in careful_bowlers:
+                batting_tips.append(f"🛡️ Play carefully against {b['name']} (Econ: {b['bowl']['avg_econ']}, Wkts: {b['bowl']['total_wickets']})")
+        if my_best_batsmen:
+            power = [p for p in my_best_batsmen if p["bat"]["avg_sr"] > 150][:2]
+            if power:
+                names = ", ".join(p["name"] for p in power)
+                batting_tips.append(f"💥 Use {names} as power hitters — high strike rate")
+
+        # Generate bowling tips
+        bowling_tips = []
+        if key_wickets:
+            for kw in key_wickets:
+                form_emoji, form_text = kw["form"]
+                bowling_tips.append(
+                    f"🔑 Get {kw['name']} out early — {int(kw['bat']['total_runs'])} runs, SR {kw['bat']['avg_sr']} {form_emoji}"
+                )
+        if weak_batsmen:
+            names = ", ".join(w["name"] for w in weak_batsmen[:2])
+            bowling_tips.append(f"⏳ Don't waste best bowlers on {names} — low threat")
+        if my_best_bowlers:
+            bowling_tips.append(f"🏆 Use {my_best_bowlers[0]['name']} in tight overs (Econ: {my_best_bowlers[0]['bowl']['avg_econ']})")
+        if my_wicket_takers and my_wicket_takers[0]["bowl"]["total_wickets"] > 0:
+            bowling_tips.append(f"⚡ Use {my_wicket_takers[0]['name']} against top batsmen ({my_wicket_takers[0]['bowl']['total_wickets']} wickets)")
+
+        # Key matchups
+        matchups = []
+        if my_wicket_takers and danger_batsmen:
+            matchups.append({
+                "my": my_wicket_takers[0]["name"],
+                "my_stat": f"{my_wicket_takers[0]['bowl']['total_wickets']}W, Econ {my_wicket_takers[0]['bowl']['avg_econ']}",
+                "opp": danger_batsmen[0]["name"],
+                "opp_stat": f"{int(danger_batsmen[0]['bat']['total_runs'])} runs, SR {danger_batsmen[0]['bat']['avg_sr']}",
+                "label": "Your best bowler vs Their best batsman"
+            })
+        if my_best_batsmen and opp_best_bowlers:
+            matchups.append({
+                "my": my_best_batsmen[0]["name"],
+                "my_stat": f"{int(my_best_batsmen[0]['bat']['total_runs'])} runs, SR {my_best_batsmen[0]['bat']['avg_sr']}",
+                "opp": opp_best_bowlers[0]["name"],
+                "opp_stat": f"{opp_best_bowlers[0]['bowl']['total_wickets']}W, Econ {opp_best_bowlers[0]['bowl']['avg_econ']}",
+                "label": "Your best batsman vs Their best bowler"
+            })
+
+        # Summary
+        summary_parts = []
+        if key_wickets:
+            summary_parts.append(f"Get {key_wickets[0]['name']} out early")
+        if target_bowlers:
+            summary_parts.append(f"target {target_bowlers[0]['name']}'s bowling")
+        if my_best_bowlers:
+            summary_parts.append(f"use {my_best_bowlers[0]['name']} in tight overs")
+        summary = "Win this match by: " + ", ".join(summary_parts) if summary_parts else ""
+
+        return {
+            "batting_tips": batting_tips,
+            "bowling_tips": bowling_tips,
+            "key_wickets": key_wickets,
+            "target_bowlers": target_bowlers,
+            "careful_bowlers": careful_bowlers,
+            "matchups": matchups,
+            "summary": summary,
+            "danger_batsmen": danger_batsmen,
+            "opp_best_bowlers": opp_best_bowlers
+        }

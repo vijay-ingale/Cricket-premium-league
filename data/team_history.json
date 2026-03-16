@@ -1,0 +1,148 @@
+[
+  {
+    "date": "2026-03-02 16:45:33",
+    "teams": [
+      {
+        "name": "Team-A",
+        "players": [
+          "Vijay Ingale",
+          "Shailesh",
+          "Anup",
+          "Satish",
+          "Suraj",
+          "Arun S",
+          "DubeyJi"
+        ],
+        "total_rating": 17,
+        "batsman_rating": 10,
+        "bowler_rating": 2,
+        "allrounder_rating": 5
+      },
+      {
+        "name": "Team-B",
+        "players": [
+          "Nitin ",
+          "Bala",
+          "Nikhil Chede",
+          "Abhishek Joshi",
+          "Vijay K",
+          "Amol",
+          "Sharad",
+          "Pankaj "
+        ],
+        "total_rating": 18,
+        "batsman_rating": 9,
+        "bowler_rating": 2,
+        "allrounder_rating": 7
+      }
+    ]
+  },
+  {
+    "date": "2026-01-30 08:58:10",
+    "teams": [
+      {
+        "name": "Team-A",
+        "players": [
+          "Abhishek Joshi",
+          "Nitin ",
+          "Vijay K",
+          "Shiv",
+          "Nayan",
+          "Pradip",
+          "Dhiraj",
+          "Gourav"
+        ],
+        "total_rating": 18,
+        "batsman_rating": 6,
+        "bowler_rating": 3,
+        "allrounder_rating": 9
+      },
+      {
+        "name": "Team-B",
+        "players": [
+          "Vijay Ingale",
+          "Bala",
+          "Chetan",
+          "Ganesh",
+          "Sharad",
+          "Suraj",
+          "Navnath Aware"
+        ],
+        "total_rating": 23,
+        "batsman_rating": 6,
+        "bowler_rating": 6,
+        "allrounder_rating": 11
+      },
+      {
+        "name": "Team-C",
+        "players": [
+          "Nikhil Chede",
+          "Shailesh",
+          "Balaji",
+          "Sushant",
+          "Pankaj ",
+          "Arun",
+          "Vaibhav"
+        ],
+        "total_rating": 23,
+        "batsman_rating": 6,
+        "bowler_rating": 6,
+        "allrounder_rating": 11
+      }
+    ]
+  },
+  {
+    "date": "2026-01-25 12:52:10",
+    "teams": [
+      {
+        "name": "Team-A",
+        "players": [
+          "Umang",
+          "Vishal",
+          "Amol",
+          "Dhiraj",
+          "Arun",
+          "Gourav"
+        ],
+        "total_rating": 17,
+        "batsman_rating": 3,
+        "bowler_rating": 5,
+        "allrounder_rating": 9
+      },
+      {
+        "name": "Team-B",
+        "players": [
+          "Bala",
+          "Vijay Ingale",
+          "Pradip",
+          "Satish",
+          "Nilesh",
+          "Shiv",
+          "Suraj",
+          "Ganesh"
+        ],
+        "total_rating": 21,
+        "batsman_rating": 6,
+        "bowler_rating": 5,
+        "allrounder_rating": 10
+      },
+      {
+        "name": "Team-C",
+        "players": [
+          "Shailesh",
+          "Nitin ",
+          "Vijay K",
+          "Balaji",
+          "Nayan",
+          "Sushant",
+          "Sharad",
+          "Vaibhav"
+        ],
+        "total_rating": 23,
+        "batsman_rating": 6,
+        "bowler_rating": 6,
+        "allrounder_rating": 11
+      }
+    ]
+  }
+]

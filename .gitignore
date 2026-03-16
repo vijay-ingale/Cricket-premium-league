@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.vscode/
+.idea/
+android-app/.gradle/
+android-app/app/build/
+android-app/local.properties
+PSPL_Android_App_Project.zip
+PSPL_Android_App_Project/
+players_data.json/
+*.pdf

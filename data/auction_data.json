@@ -1,0 +1,87 @@
+{
+  "config": {
+    "num_teams": 4,
+    "squad_size": 7,
+    "budget_per_team": 100000,
+    "bid_increment": 1000,
+    "teams": [
+      "Team A",
+      "Team B",
+      "Team C",
+      "Team D"
+    ],
+    "captains": {
+      "Team A": "Pradip",
+      "Team B": "Ganesh",
+      "Team C": "Anup",
+      "Team D": "Umang"
+    },
+    "rounds": [
+      {
+        "name": "Captain",
+        "base_price": 1000,
+        "max_bid_per_player": 51000,
+        "players": [
+          {
+            "name": "Umang",
+            "category": "Batsman"
+          },
+          {
+            "name": "Anup",
+            "category": "Batsman"
+          },
+          {
+            "name": "Vishal",
+            "category": "Bowler"
+          },
+          {
+            "name": "Pradip",
+            "category": "Bowler"
+          }
+        ]
+      }
+    ]
+  },
+  "state": {
+    "active": true,
+    "current_round": 0,
+    "sold": [],
+    "team_squads": {
+      "Team A": [
+        {
+          "name": "Pradip",
+          "category": "Captain",
+          "bid": 0
+        }
+      ],
+      "Team B": [
+        {
+          "name": "Ganesh",
+          "category": "Captain",
+          "bid": 0
+        }
+      ],
+      "Team C": [
+        {
+          "name": "Anup",
+          "category": "Captain",
+          "bid": 0
+        }
+      ],
+      "Team D": [
+        {
+          "name": "Umang",
+          "category": "Captain",
+          "bid": 0
+        }
+      ]
+    },
+    "team_spent": {
+      "Team A": 0,
+      "Team B": 0,
+      "Team C": 0,
+      "Team D": 0
+    }
+  },
+  "history": []
+}

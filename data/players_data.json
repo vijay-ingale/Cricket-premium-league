@@ -1,0 +1,43 @@
+{
+  "Batsman": {
+    "Vijay Ingale": 4,
+    "Nitin ": 4,
+    "Bala": 4,
+    "Umang": 4,
+    "Shailesh": 1,
+    "Abhishek Joshi": 1,
+    "Nikhil Chede": 4,
+    "Anup": 1
+  },
+  "Bowler": {
+    "Balaji": 1,
+    "Vishal": 2,
+    "Pradip": 2,
+    "Chetan": 2,
+    "Satish": 3,
+    "Amol": 2,
+    "Vijay K": 2,
+    "Ganesh": 1
+  },
+  "All-rounder": {
+    "Nayan": 3,
+    "Vaibhav": 1,
+    "Sushant": 3,
+    "Arun": 0,
+    "Shiv": 1,
+    "Sharad": 2,
+    "Suraj": 4,
+    "Dhiraj": 0,
+    "Nilesh": 3,
+    "Arun S": 2,
+    "Navnath Aware": 2,
+    "Pankaj ": 3,
+    "Ram Patil Ps": 0,
+    "Mangesh Bodkhe Ps": 2,
+    "DubeyJi": 1,
+    "Kaustubh": 2,
+    "Gaurav": 0,
+    "Swapnil": 0,
+    "Gunesh": 0
+  }
+}

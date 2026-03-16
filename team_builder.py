@@ -7,7 +7,7 @@ from datetime import datetime
 class TeamBuilder:
     def __init__(self, data_file='players_data.json', history_file='team_history.json'):
         # Support Docker volume mounting
-        data_dir = os.getenv('DATA_DIR', '.')
+        data_dir = os.getenv('DATA_DIR', 'data')
         if not os.path.exists(data_dir):
             os.makedirs(data_dir)
         self.data_file = os.path.join(data_dir, 'players_data.json')

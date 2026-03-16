@@ -2313,44 +2313,48 @@ elif st.session_state.current_view == 'scouting':
                 strategy = sm.generate_strategy(my_team, opponent_team)
 
                 # Summary card
-                if strategy["summary"]:
-                    st.markdown(f"""
-                        <div style="background: linear-gradient(135deg, #1e293b, #334155); border-radius: 12px;
-                             padding: 20px; margin: 16px 0;">
-                            <p style="color: #fbbf24; font-size: 0.85rem; font-weight: 600; margin: 0 0 6px 0; text-transform: uppercase;">
-                                🎯 Game Plan
-                            </p>
-                            <p style="color: white; font-size: 1.15rem; font-weight: 700; margin: 0;">
-                                {strategy['summary']}
-                            </p>
-                        </div>
-                    """, unsafe_allow_html=True)
+                strat_summary = strategy.get("summary", "")
+                if strat_summary:
+                    summary_html = (
+                        '<div style="background: linear-gradient(135deg, #1e293b, #334155); border-radius: 12px;'
+                        ' padding: 20px; margin: 16px 0;">'
+                        '<p style="color: #fbbf24; font-size: 0.85rem; font-weight: 600; margin: 0 0 6px 0; text-transform: uppercase;">'
+                        '🎯 Game Plan</p>'
+                        '<p style="color: white; font-size: 1.15rem; font-weight: 700; margin: 0;">'
+                        + strat_summary +
+                        '</p></div>'
+                    )
+                    st.markdown(summary_html, unsafe_allow_html=True)
 
                 # Key Matchups
-                if strategy["matchups"]:
+                strat_matchups = strategy.get("matchups", [])
+                if strat_matchups:
                     st.markdown("#### ⚔️ Key Match-ups")
-                    for mu in strategy["matchups"]:
-                        st.markdown(f"""
-                            <div style="background: white; border-radius: 10px; padding: 14px; margin: 8px 0;
-                                 box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
-                                <p style="text-align: center; color: #64748b; font-size: 0.8rem; margin: 0 0 8px 0;">
-                                    {mu['label']}
-                                </p>
-                                <div style="display: flex; align-items: center; justify-content: space-between;">
-                                    <div style="flex: 1; text-align: center;">
-                                        <p style="margin: 0; font-weight: 700; color: #14b8a6; font-size: 1.05rem;">{mu['my']}</p>
-                                        <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">{mu['my_stat']}</p>
-                                    </div>
-                                    <div style="padding: 0 12px;">
-                                        <span style="font-size: 1.2rem; font-weight: 800; color: #f59e0b;">VS</span>
-                                    </div>
-                                    <div style="flex: 1; text-align: center;">
-                                        <p style="margin: 0; font-weight: 700; color: #ef4444; font-size: 1.05rem;">{mu['opp']}</p>
-                                        <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">{mu['opp_stat']}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        """, unsafe_allow_html=True)
+                    for mu in strat_matchups:
+                        mu_label = mu.get("label", "")
+                        mu_my = mu.get("my", "")
+                        mu_my_stat = mu.get("my_stat", "")
+                        mu_opp = mu.get("opp", "")
+                        mu_opp_stat = mu.get("opp_stat", "")
+                        mu_html = (
+                            '<div style="background: white; border-radius: 10px; padding: 14px; margin: 8px 0;'
+                            ' box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">'
+                            '<p style="text-align: center; color: #64748b; font-size: 0.8rem; margin: 0 0 8px 0;">'
+                            + mu_label + '</p>'
+                            '<div style="display: flex; align-items: center; justify-content: space-between;">'
+                            '<div style="flex: 1; text-align: center;">'
+                            '<p style="margin: 0; font-weight: 700; color: #14b8a6; font-size: 1.05rem;">' + mu_my + '</p>'
+                            '<p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">' + mu_my_stat + '</p>'
+                            '</div>'
+                            '<div style="padding: 0 12px;">'
+                            '<span style="font-size: 1.2rem; font-weight: 800; color: #f59e0b;">VS</span>'
+                            '</div>'
+                            '<div style="flex: 1; text-align: center;">'
+                            '<p style="margin: 0; font-weight: 700; color: #ef4444; font-size: 1.05rem;">' + mu_opp + '</p>'
+                            '<p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">' + mu_opp_stat + '</p>'
+                            '</div></div></div>'
+                        )
+                        st.markdown(mu_html, unsafe_allow_html=True)
 
                 st.markdown("---")
 
@@ -2359,74 +2363,86 @@ elif st.session_state.current_view == 'scouting':
                 # Batting Strategy
                 with strat_left:
                     st.markdown("#### 🏏 Batting Strategy")
-                    if strategy["batting_tips"]:
-                        for tip in strategy["batting_tips"]:
-                            st.markdown(f"""
-                                <div style="background: #f0fdf4; border-radius: 8px; padding: 10px; margin: 6px 0;
-                                     border-left: 4px solid #22c55e;">
-                                    <p style="margin: 0; font-size: 0.9rem; color: #166534;">{tip}</p>
-                                </div>
-                            """, unsafe_allow_html=True)
+                    bat_tips = strategy.get("batting_tips", [])
+                    if bat_tips:
+                        for tip in bat_tips:
+                            tip_html = (
+                                '<div style="background: #f0fdf4; border-radius: 8px; padding: 10px; margin: 6px 0;'
+                                ' border-left: 4px solid #22c55e;">'
+                                '<p style="margin: 0; font-size: 0.9rem; color: #166534;">' + str(tip) + '</p></div>'
+                            )
+                            st.markdown(tip_html, unsafe_allow_html=True)
                     else:
                         st.info("No specific batting tips — not enough opponent bowling data")
 
                     # Target bowlers
-                    if strategy["target_bowlers"]:
+                    t_bowlers = strategy.get("target_bowlers", [])
+                    if t_bowlers:
                         st.markdown("##### 🎯 Target These Bowlers")
-                        for tb in strategy["target_bowlers"]:
-                            st.markdown(f"""
-                                <div style="background: #fef3c7; border-radius: 8px; padding: 8px 12px; margin: 4px 0;
-                                     border-left: 4px solid #f59e0b;">
-                                    <p style="margin: 0; font-size: 0.9rem; color: #92400e;">
-                                        🎯 {tb['name']} — Econ: {tb['bowl']['avg_econ']} | {tb['bowl']['total_wickets']}W in {tb['bowl']['total_overs']} ov
-                                    </p>
-                                </div>
-                            """, unsafe_allow_html=True)
+                        for tb in t_bowlers:
+                            tb_name = tb.get("name", "")
+                            tb_econ = tb.get("bowl", {}).get("avg_econ", 0)
+                            tb_wkts = tb.get("bowl", {}).get("total_wickets", 0)
+                            tb_overs = tb.get("bowl", {}).get("total_overs", 0)
+                            tb_html = (
+                                '<div style="background: #fef3c7; border-radius: 8px; padding: 8px 12px; margin: 4px 0;'
+                                ' border-left: 4px solid #f59e0b;">'
+                                '<p style="margin: 0; font-size: 0.9rem; color: #92400e;">'
+                                '🎯 ' + tb_name + ' — Econ: ' + str(tb_econ) + ' | ' + str(tb_wkts) + 'W in ' + str(tb_overs) + ' ov'
+                                '</p></div>'
+                            )
+                            st.markdown(tb_html, unsafe_allow_html=True)
 
                     # Careful against
-                    if strategy["careful_bowlers"]:
+                    c_bowlers = strategy.get("careful_bowlers", [])
+                    if c_bowlers:
                         st.markdown("##### 🛡️ Be Careful Against")
-                        for cb in strategy["careful_bowlers"]:
-                            st.markdown(f"""
-                                <div style="background: #fef2f2; border-radius: 8px; padding: 8px 12px; margin: 4px 0;
-                                     border-left: 4px solid #ef4444;">
-                                    <p style="margin: 0; font-size: 0.9rem; color: #991b1b;">
-                                        ⚠️ {cb['name']} — Econ: {cb['bowl']['avg_econ']} | {cb['bowl']['total_wickets']}W
-                                    </p>
-                                </div>
-                            """, unsafe_allow_html=True)
+                        for cb in c_bowlers:
+                            cb_name = cb.get("name", "")
+                            cb_econ = cb.get("bowl", {}).get("avg_econ", 0)
+                            cb_wkts = cb.get("bowl", {}).get("total_wickets", 0)
+                            cb_html = (
+                                '<div style="background: #fef2f2; border-radius: 8px; padding: 8px 12px; margin: 4px 0;'
+                                ' border-left: 4px solid #ef4444;">'
+                                '<p style="margin: 0; font-size: 0.9rem; color: #991b1b;">'
+                                '⚠️ ' + cb_name + ' — Econ: ' + str(cb_econ) + ' | ' + str(cb_wkts) + 'W'
+                                '</p></div>'
+                            )
+                            st.markdown(cb_html, unsafe_allow_html=True)
 
                 # Bowling Strategy
                 with strat_right:
                     st.markdown("#### ⚡ Bowling Strategy")
-                    if strategy["bowling_tips"]:
-                        for tip in strategy["bowling_tips"]:
-                            st.markdown(f"""
-                                <div style="background: #eff6ff; border-radius: 8px; padding: 10px; margin: 6px 0;
-                                     border-left: 4px solid #3b82f6;">
-                                    <p style="margin: 0; font-size: 0.9rem; color: #1e40af;">{tip}</p>
-                                </div>
-                            """, unsafe_allow_html=True)
+                    bowl_tips = strategy.get("bowling_tips", [])
+                    if bowl_tips:
+                        for tip in bowl_tips:
+                            tip_html = (
+                                '<div style="background: #eff6ff; border-radius: 8px; padding: 10px; margin: 6px 0;'
+                                ' border-left: 4px solid #3b82f6;">'
+                                '<p style="margin: 0; font-size: 0.9rem; color: #1e40af;">' + str(tip) + '</p></div>'
+                            )
+                            st.markdown(tip_html, unsafe_allow_html=True)
                     else:
                         st.info("No specific bowling tips — not enough opponent batting data")
 
                     # Danger batsmen
-                    if strategy["danger_batsmen"]:
+                    d_batsmen = strategy.get("danger_batsmen", [])
+                    if d_batsmen:
                         st.markdown("##### 🔥 Danger Batsmen")
-                        for db in strategy["danger_batsmen"][:4]:
-                            form_emoji, form_text = db["form"]
-                            runs = int(db["bat"]["total_runs"])
-                            sr = db["bat"]["avg_sr"]
-                            sixes = db["bat"]["total_6s"]
+                        for db_item in d_batsmen[:4]:
+                            form_emoji, form_text = db_item.get("form", ("", ""))
+                            runs = int(db_item.get("bat", {}).get("total_runs", 0))
+                            sr = db_item.get("bat", {}).get("avg_sr", 0)
+                            sixes = db_item.get("bat", {}).get("total_6s", 0)
+                            db_name = db_item.get("name", "")
                             threat_color = "#ef4444" if runs > 50 else "#f59e0b" if runs > 20 else "#94a3b8"
-                            st.markdown(f"""
-                                <div style="background: white; border-radius: 8px; padding: 8px 12px; margin: 4px 0;
-                                     border-left: 4px solid {threat_color}; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                                    <p style="margin: 0; font-size: 0.9rem; color: #1e293b; font-weight: 600;">
-                                        {db['name']} {form_emoji}
-                                    </p>
-                                    <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">
-                                        {runs} runs | SR {sr} | {sixes} sixes | {form_text}
-                                    </p>
-                                </div>
-                            """, unsafe_allow_html=True)
+                            db_html = (
+                                '<div style="background: white; border-radius: 8px; padding: 8px 12px; margin: 4px 0;'
+                                ' border-left: 4px solid ' + threat_color + '; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">'
+                                '<p style="margin: 0; font-size: 0.9rem; color: #1e293b; font-weight: 600;">'
+                                + db_name + ' ' + form_emoji + '</p>'
+                                '<p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">'
+                                + str(runs) + ' runs | SR ' + str(sr) + ' | ' + str(sixes) + ' sixes | ' + form_text
+                                + '</p></div>'
+                            )
+                            st.markdown(db_html, unsafe_allow_html=True)

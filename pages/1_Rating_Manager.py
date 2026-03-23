@@ -33,7 +33,7 @@ with tab1:
         bowling_pdf = st.file_uploader("Bowling Leaderboard PDF", type=['pdf'], key="bowling_pdf")
         mvp_pdf = st.file_uploader("MVP Leaderboard PDF", type=['pdf'], key="mvp_pdf")
         
-        if st.button("🔍 Parse & Calculate Ratings", type="primary", use_container_width=True):
+        if st.button("🔍 Parse & Calculate Ratings", type="primary", width=" stretch\):
             if batting_pdf and bowling_pdf and mvp_pdf:
                 with st.spinner("Parsing PDFs..."):
                     # Parse PDFs
@@ -101,7 +101,7 @@ with tab1:
                                     st.rerun()
                     
                     st.markdown("---")
-                    if st.button("🔄 Refresh After Adding", type="primary", use_container_width=True):
+                    if st.button("🔄 Refresh After Adding", type="primary", width=" stretch\):
                         st.rerun()
 
 # Tab 2: View & Apply Ratings
@@ -201,7 +201,7 @@ with tab2:
         st.markdown("---")
         col1, col2 = st.columns([5, 1])
         with col2:
-            if st.button("✅ Apply All", type="primary", use_container_width=True):
+            if st.button("✅ Apply All", type="primary", width=" stretch\):
                 for update in rating_updates:
                     # Add to history
                     batting_rating, bat_stats = st.session_state.rating_system.calculate_batting_rating(

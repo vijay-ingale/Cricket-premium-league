@@ -18,70 +18,36 @@
     },
     "rounds": [
       {
-        "name": "Captain",
-        "base_price": 1000,
+        "name": "Batsman",
+        "base_price": 2000,
         "max_bid_per_player": 51000,
         "players": [
           {
-            "name": "Umang",
+            "name": "Vijay Ingale",
             "category": "Batsman"
           },
           {
-            "name": "Anup",
+            "name": "Nitin ",
             "category": "Batsman"
           },
           {
-            "name": "Vishal",
-            "category": "Bowler"
+            "name": "Bala",
+            "category": "Batsman"
           },
           {
-            "name": "Pradip",
-            "category": "Bowler"
+            "name": "Shailesh",
+            "category": "Batsman"
           }
         ]
       }
     ]
   },
   "state": {
-    "active": true,
+    "active": false,
     "current_round": 0,
     "sold": [],
-    "team_squads": {
-      "Team A": [
-        {
-          "name": "Pradip",
-          "category": "Captain",
-          "bid": 0
-        }
-      ],
-      "Team B": [
-        {
-          "name": "Ganesh",
-          "category": "Captain",
-          "bid": 0
-        }
-      ],
-      "Team C": [
-        {
-          "name": "Anup",
-          "category": "Captain",
-          "bid": 0
-        }
-      ],
-      "Team D": [
-        {
-          "name": "Umang",
-          "category": "Captain",
-          "bid": 0
-        }
-      ]
-    },
-    "team_spent": {
-      "Team A": 0,
-      "Team B": 0,
-      "Team C": 0,
-      "Team D": 0
-    }
+    "team_squads": {},
+    "team_spent": {}
   },
   "history": []
 }

@@ -133,6 +133,21 @@
           "economy": 13.91,
           "overs": 3.4
         }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 4.62,
+        "bowling_rating": 1.71,
+        "overall_rating": 4.6,
+        "stats": {
+          "runs": 123,
+          "sr": 267.39,
+          "sixes": 16,
+          "fours": 4,
+          "wickets": 0,
+          "economy": 12.75,
+          "overs": 4.0
+        }
       }
     ]
   },
@@ -530,6 +545,21 @@
         "bowling_rating": 0,
         "overall_rating": 0.0,
         "stats": {}
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 2.94,
+        "bowling_rating": 1.54,
+        "overall_rating": 2.9,
+        "stats": {
+          "runs": 34,
+          "sr": 170.0,
+          "sixes": 3,
+          "fours": 3,
+          "wickets": 0,
+          "economy": 11.33,
+          "overs": 3.0
+        }
       }
     ]
   },
@@ -600,6 +630,21 @@
         "bowling_rating": 0,
         "overall_rating": 0.0,
         "stats": {}
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 4.07,
+        "bowling_rating": 3.58,
+        "overall_rating": 4.1,
+        "stats": {
+          "runs": 57,
+          "sr": 183.87,
+          "sixes": 7,
+          "fours": 0,
+          "wickets": 2,
+          "economy": 6.75,
+          "overs": 4.0
+        }
       }
     ]
   },
@@ -780,6 +825,21 @@
           "economy": 13.67,
           "overs": 3.0
         }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 0.82,
+        "bowling_rating": 3.03,
+        "overall_rating": 3.0,
+        "stats": {
+          "runs": 7,
+          "sr": 63.64,
+          "sixes": 1,
+          "fours": 0,
+          "wickets": 2,
+          "economy": 11.5,
+          "overs": 4.0
+        }
       }
     ]
   },
@@ -875,6 +935,21 @@
           "fours": 3,
           "wickets": 1,
           "economy": 17.5,
+          "overs": 4.0
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 4.2,
+        "bowling_rating": 1.47,
+        "overall_rating": 1.5,
+        "stats": {
+          "runs": 63,
+          "sr": 161.54,
+          "sixes": 7,
+          "fours": 2,
+          "wickets": 0,
+          "economy": 19.25,
           "overs": 4.0
         }
       }
@@ -991,6 +1066,21 @@
           "fours": 0,
           "wickets": 1,
           "economy": 14.75,
+          "overs": 4.0
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 2.52,
+        "bowling_rating": 1.72,
+        "overall_rating": 1.7,
+        "stats": {
+          "runs": 28,
+          "sr": 155.56,
+          "sixes": 3,
+          "fours": 1,
+          "wickets": 0,
+          "economy": 12.5,
           "overs": 4.0
         }
       }
@@ -1195,6 +1285,21 @@
           "economy": 14.33,
           "overs": 3.0
         }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 1.36,
+        "bowling_rating": 1.52,
+        "overall_rating": 1.5,
+        "stats": {
+          "runs": 16,
+          "sr": 123.08,
+          "sixes": 0,
+          "fours": 2,
+          "wickets": 0,
+          "economy": 11.67,
+          "overs": 3.0
+        }
       }
     ]
   },
@@ -1309,6 +1414,21 @@
           "fours": 2,
           "wickets": 0,
           "economy": 15.25,
+          "overs": 4.0
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 2.58,
+        "bowling_rating": 2.28,
+        "overall_rating": 2.3,
+        "stats": {
+          "runs": 32,
+          "sr": 160.0,
+          "sixes": 2,
+          "fours": 3,
+          "wickets": 1,
+          "economy": 13.75,
           "overs": 4.0
         }
       }
@@ -1426,6 +1546,21 @@
           "wickets": 0,
           "economy": 16.0,
           "overs": 2.3
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 2.06,
+        "bowling_rating": 3.82,
+        "overall_rating": 3.8,
+        "stats": {
+          "runs": 20,
+          "sr": 153.85,
+          "sixes": 2,
+          "fours": 1,
+          "wickets": 3,
+          "economy": 9.5,
+          "overs": 4.0
         }
       }
     ]
@@ -1651,6 +1786,21 @@
           "fours": 0,
           "wickets": 2,
           "economy": 11.75,
+          "overs": 4.0
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 3.21,
+        "bowling_rating": 2.74,
+        "overall_rating": 2.9,
+        "stats": {
+          "runs": 40,
+          "sr": 153.85,
+          "sixes": 5,
+          "fours": 0,
+          "wickets": 2,
+          "economy": 18.5,
           "overs": 4.0
         }
       }
@@ -1915,6 +2065,21 @@
           "fours": 5,
           "wickets": 1,
           "economy": 7.25,
+          "overs": 4.0
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 4.28,
+        "bowling_rating": 3.07,
+        "overall_rating": 3.6,
+        "stats": {
+          "runs": 56,
+          "sr": 207.41,
+          "sixes": 5,
+          "fours": 4,
+          "wickets": 2,
+          "economy": 11.0,
           "overs": 4.0
         }
       }
@@ -2562,6 +2727,21 @@
           "economy": 18.5,
           "overs": 2.0
         }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 4.34,
+        "bowling_rating": 2.27,
+        "overall_rating": 3.3,
+        "stats": {
+          "runs": 70,
+          "sr": 225.81,
+          "sixes": 9,
+          "fours": 1,
+          "wickets": 1,
+          "economy": 14.0,
+          "overs": 4.0
+        }
       }
     ]
   },
@@ -2663,6 +2843,21 @@
           "wickets": 1,
           "economy": 16.0,
           "overs": 1.0
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 2.32,
+        "bowling_rating": 4.08,
+        "overall_rating": 3.1,
+        "stats": {
+          "runs": 29,
+          "sr": 120.83,
+          "sixes": 3,
+          "fours": 1,
+          "wickets": 4,
+          "economy": 12.78,
+          "overs": 3.5
         }
       }
     ]
@@ -2803,6 +2998,21 @@
           "wickets": 0,
           "economy": 10.17,
           "overs": 3.5
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 2.35,
+        "bowling_rating": 2.43,
+        "overall_rating": 2.4,
+        "stats": {
+          "runs": 32,
+          "sr": 123.08,
+          "sixes": 2,
+          "fours": 3,
+          "wickets": 1,
+          "economy": 11.25,
+          "overs": 4.0
         }
       }
     ]
@@ -2950,6 +3160,21 @@
           "wickets": 0,
           "economy": 14.35,
           "overs": 3.5
+        }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 0.92,
+        "bowling_rating": 3.58,
+        "overall_rating": 2.2,
+        "stats": {
+          "runs": 8,
+          "sr": 100.0,
+          "sixes": 0,
+          "fours": 1,
+          "wickets": 3,
+          "economy": 7.5,
+          "overs": 2.0
         }
       }
     ]
@@ -3215,6 +3440,21 @@
           "economy": 14.0,
           "overs": 2.0
         }
+      },
+      {
+        "date": "2026-03-23",
+        "batting_rating": 3.58,
+        "bowling_rating": 1.68,
+        "overall_rating": 3.6,
+        "stats": {
+          "runs": 38,
+          "sr": 180.95,
+          "sixes": 6,
+          "fours": 0,
+          "wickets": 0,
+          "economy": 13.25,
+          "overs": 4.0
+        }
       }
     ]
   },
@@ -3275,6 +3515,26 @@
         "bowling_rating": 0,
         "overall_rating": 0.0,
         "stats": {}
+      }
+    ]
+  },
+  "Elangovan": {
+    "category": "All-rounder",
+    "entries": [
+      {
+        "date": "2026-03-23",
+        "batting_rating": 2.23,
+        "bowling_rating": 2.29,
+        "overall_rating": 2.1,
+        "stats": {
+          "runs": 25,
+          "sr": 147.06,
+          "sixes": 2,
+          "fours": 2,
+          "wickets": 1,
+          "economy": 10.11,
+          "overs": 3.1
+        }
       }
     ]
   }

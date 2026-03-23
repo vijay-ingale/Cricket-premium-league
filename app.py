@@ -1825,7 +1825,7 @@ elif st.session_state.current_view == 'scouting':
 
     st.markdown("## 📰 Pre-Tournament Scouting Report")
 
-    scout_tab1, scout_tab2, scout_tab3, scout_tab4 = st.tabs(["⚙️ Team Config", "📊 Scouting Report", "⚔️ Compare", "🎯 Strategy"])
+    scout_tab1, scout_tab2, scout_tab3, scout_tab4, scout_tab5 = st.tabs(["⚙️ Team Config", "📊 Scouting Report", "⚔️ Compare", "🎯 Strategy", "🔮 Predict"])
 
     # --- TAB 1: Team Configuration ---
     with scout_tab1:
@@ -2446,4 +2446,181 @@ elif st.session_state.current_view == 'scouting':
                                 + '</p></div>'
                             )
                             st.markdown(db_html, unsafe_allow_html=True)
+
+
+    # --- TAB 5: Predict ---
+    with scout_tab5:
+        teams = sm.get_teams()
+        total_matches = sm.get_total_matches()
+
+        if not teams:
+            st.warning("⚠️ Configure tournament teams first in the Team Config tab")
+        elif total_matches == 0:
+            st.warning("⚠️ No match data found. Upload match reports in Rating Manager first.")
+        else:
+            st.markdown("### 🔮 Match Prediction")
+            st.caption("Win probability, predicted scorecard and weakness spotlight based on historical data")
+
+            team_names = sm.get_team_names()
+            pred_c1, pred_c2 = st.columns(2)
+            with pred_c1:
+                pred_team_a = st.selectbox("Team A", team_names, key="pred_team_a")
+            with pred_c2:
+                pred_other = [t for t in team_names if t != pred_team_a]
+                pred_team_b = st.selectbox("Team B", pred_other, key="pred_team_b")
+
+            if pred_team_a and pred_team_b:
+                pred = sm.predict_match(pred_team_a, pred_team_b)
+                prob_a = pred["prob_a"]
+                prob_b = pred["prob_b"]
+                winner = pred["predicted_winner"]
+                confidence = pred["confidence"]
+                sa = pred["stats_a"]
+                sb = pred["stats_b"]
+                conf_color = {"High": "#22c55e", "Medium": "#f59e0b", "Low": "#94a3b8"}.get(confidence, "#94a3b8")
+
+                # Winner banner
+                st.markdown(
+                    '<div style="background: linear-gradient(135deg, #1e293b, #334155); border-radius: 12px;'
+                    ' padding: 20px; margin: 16px 0; text-align: center;">'
+                    '<p style="color: #94a3b8; font-size: 0.85rem; margin: 0 0 6px 0;">PREDICTED WINNER</p>'
+                    '<p style="color: #fbbf24; font-size: 1.6rem; font-weight: 800; margin: 0;">🏆 ' + winner + '</p>'
+                    '<p style="color: ' + conf_color + '; font-size: 0.9rem; margin: 6px 0 0 0;">Confidence: ' + confidence + '</p>'
+                    '</div>',
+                    unsafe_allow_html=True
+                )
+
+                # Probability bar
+                st.markdown("#### 📊 Win Probability")
+                st.markdown(
+                    '<div style="margin: 12px 0;">'
+                    '<div style="display: flex; justify-content: space-between; margin-bottom: 6px;">'
+                    '<span style="font-weight: 700; color: #14b8a6; font-size: 1rem;">' + pred_team_a + '</span>'
+                    '<span style="font-weight: 700; color: #f59e0b; font-size: 1rem;">' + pred_team_b + '</span>'
+                    '</div>'
+                    '<div style="display: flex; height: 36px; border-radius: 8px; overflow: hidden;">'
+                    '<div style="width: ' + str(prob_a) + '%; background: #14b8a6; display: flex; align-items: center;'
+                    ' justify-content: center; font-weight: 800; color: white; font-size: 1rem;">' + str(prob_a) + '%</div>'
+                    '<div style="width: ' + str(prob_b) + '%; background: #f59e0b; display: flex; align-items: center;'
+                    ' justify-content: center; font-weight: 800; color: white; font-size: 1rem;">' + str(prob_b) + '%</div>'
+                    '</div></div>',
+                    unsafe_allow_html=True
+                )
+
+                # Edge analysis
+                st.markdown("---")
+                st.markdown("#### ⚡ Edge Analysis")
+                e1, e2, e3 = st.columns(3)
+                for col, label, edge_team in zip(
+                    [e1, e2, e3],
+                    ["🏏 Batting Edge", "⚡ Bowling Edge", "🔥 Form Edge"],
+                    [pred["bat_edge"], pred["bowl_edge"], pred["form_edge"]]
+                ):
+                    edge_color = "#14b8a6" if edge_team == pred_team_a else "#f59e0b"
+                    with col:
+                        st.markdown(
+                            '<div style="background: white; border-radius: 10px; padding: 12px; text-align: center;'
+                            ' box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-top: 4px solid ' + edge_color + ';">'
+                            '<p style="margin: 0; font-size: 0.8rem; color: #64748b;">' + label + '</p>'
+                            '<p style="margin: 4px 0 0 0; font-weight: 700; color: ' + edge_color + '; font-size: 1rem;">' + edge_team + '</p>'
+                            '</div>',
+                            unsafe_allow_html=True
+                        )
+
+                # Predicted Scorecard
+                st.markdown("---")
+                st.markdown("#### 🏏 Predicted Scorecard")
+                sc1, sc2 = st.columns(2)
+                for col, team_name, stats, color in [
+                    (sc1, pred_team_a, sa, "#14b8a6"),
+                    (sc2, pred_team_b, sb, "#f59e0b")
+                ]:
+                    sc = stats.get("scorecard", {})
+                    exp_low = sc.get("expected_low", 0)
+                    exp_high = sc.get("expected_high", 0)
+                    top_bat = sc.get("top_scorer", "—")
+                    top_bat_runs = sc.get("top_scorer_runs", 0)
+                    top_bowl = sc.get("top_wicket_taker", "—")
+                    top_bowl_wkts = sc.get("top_wicket_taker_wkts", 0)
+                    with col:
+                        st.markdown(
+                            '<div style="background: white; border-radius: 12px; padding: 16px;'
+                            ' box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid ' + color + ';">'
+                            '<p style="margin: 0 0 10px 0; font-weight: 700; color: #1e293b; font-size: 1rem;">' + team_name + '</p>'
+                            '<p style="margin: 0; font-size: 0.85rem; color: #64748b;">Expected Score</p>'
+                            '<p style="margin: 2px 0 10px 0; font-size: 1.4rem; font-weight: 800; color: ' + color + ';">'
+                            + str(exp_low) + ' – ' + str(exp_high) + '</p>'
+                            '<p style="margin: 0; font-size: 0.85rem; color: #64748b;">🏏 Likely Top Scorer</p>'
+                            '<p style="margin: 2px 0 8px 0; font-weight: 600; color: #1e293b;">'
+                            + (top_bat + ' (' + str(round(top_bat_runs, 1)) + ' avg/match)' if top_bat else '—') + '</p>'
+                            '<p style="margin: 0; font-size: 0.85rem; color: #64748b;">⚡ Likely Top Wicket Taker</p>'
+                            '<p style="margin: 2px 0 0 0; font-weight: 600; color: #1e293b;">'
+                            + (top_bowl + ' (' + str(top_bowl_wkts) + ' wkts)' if top_bowl else '—') + '</p>'
+                            '</div>',
+                            unsafe_allow_html=True
+                        )
+
+                # Weakness Spotlight
+                st.markdown("---")
+                st.markdown("#### 🔍 Weakness Spotlight")
+                ws1, ws2 = st.columns(2)
+                for col, team_name, stats in [(ws1, pred_team_a, sa), (ws2, pred_team_b, sb)]:
+                    with col:
+                        st.markdown("**" + team_name + "**")
+                        for icon, msg in stats.get("weaknesses", []):
+                            bg = "#fef2f2" if icon in ("⚠️", "💸", "🎯") else "#f0fdf4"
+                            border = "#ef4444" if icon in ("⚠️", "💸", "🎯") else "#22c55e"
+                            st.markdown(
+                                '<div style="background: ' + bg + '; border-radius: 8px; padding: 8px 12px;'
+                                ' margin: 4px 0; border-left: 4px solid ' + border + ';">'
+                                '<p style="margin: 0; font-size: 0.85rem; color: #1e293b;">' + icon + ' ' + msg + '</p>'
+                                '</div>',
+                                unsafe_allow_html=True
+                            )
+
+                # Key players to watch
+                st.markdown("---")
+                st.markdown("#### 🌟 Key Players to Watch")
+                kp1, kp2 = st.columns(2)
+                for col, team_name, stats, color, bg in [
+                    (kp1, pred_team_a, sa, "#14b8a6", "#f0fdf4"),
+                    (kp2, pred_team_b, sb, "#f59e0b", "#fffbeb")
+                ]:
+                    with col:
+                        if stats["key_player"]:
+                            fe, ft = stats["key_form"]
+                            st.markdown(
+                                '<div style="background: ' + bg + '; border-radius: 10px; padding: 12px;'
+                                ' border-left: 4px solid ' + color + ';">'
+                                '<p style="margin: 0; font-size: 0.8rem; color: #64748b;">' + team_name + '</p>'
+                                '<p style="margin: 4px 0 0 0; font-weight: 700; font-size: 1.05rem; color: #1e293b;">'
+                                + stats["key_player"] + ' ' + fe + '</p>'
+                                '<p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">' + ft + '</p>'
+                                '</div>',
+                                unsafe_allow_html=True
+                            )
+
+                # WhatsApp share
+                st.markdown("---")
+                import urllib.parse
+                sc_a = sa.get("scorecard", {})
+                sc_b = sb.get("scorecard", {})
+                share_text = (
+                    "🔮 PSPL Match Prediction\n\n"
+                    + pred_team_a + " vs " + pred_team_b + "\n\n"
+                    "🏆 Predicted Winner: " + winner + " (" + confidence + " confidence)\n"
+                    "📊 " + pred_team_a + " " + str(prob_a) + "% | " + pred_team_b + " " + str(prob_b) + "%\n\n"
+                    "🏏 Predicted Scores:\n"
+                    + pred_team_a + ": " + str(sc_a.get("expected_low", 0)) + "–" + str(sc_a.get("expected_high", 0)) + "\n"
+                    + pred_team_b + ": " + str(sc_b.get("expected_low", 0)) + "–" + str(sc_b.get("expected_high", 0)) + "\n\n"
+                    "⚡ Edges: Batting→" + pred["bat_edge"] + " | Bowling→" + pred["bowl_edge"] + " | Form→" + pred["form_edge"] + "\n\n"
+                    "📱 Full stats: https://cricket-premium-league.streamlit.app"
+                )
+                wa_url = "https://wa.me/?text=" + urllib.parse.quote(share_text)
+                st.markdown(
+                    '<a href="' + wa_url + '" target="_blank" style="display: inline-block; background: #25d366;'
+                    ' color: white; padding: 10px 24px; border-radius: 8px; font-weight: 700;'
+                    ' text-decoration: none; font-size: 0.95rem;">📲 Share Prediction on WhatsApp</a>',
+                    unsafe_allow_html=True
+                )
 

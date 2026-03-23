@@ -70,23 +70,23 @@ st.markdown("<h1>🏏 Cricket Team Builder</h1>", unsafe_allow_html=True)
 # Navigation
 col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1])
 with col1:
-    if st.button("🏏 Team Builder", width=" stretch\, type="primary" if st.session_state.current_view == 'team_builder' else "secondary"):
+    if st.button("🏏 Team Builder", width="stretch", type="primary" if st.session_state.current_view == 'team_builder' else "secondary"):
         st.session_state.current_view = 'team_builder'
         st.rerun()
 with col2:
-    if st.button("📊 Rating Manager", width=" stretch\, type="primary" if st.session_state.current_view == 'rating_manager' else "secondary"):
+    if st.button("📊 Rating Manager", width="stretch", type="primary" if st.session_state.current_view == 'rating_manager' else "secondary"):
         st.session_state.current_view = 'rating_manager'
         st.rerun()
 with col3:
-    if st.button("🏆 Leaderboard", width=" stretch\, type="primary" if st.session_state.current_view == 'leaderboard' else "secondary"):
+    if st.button("🏆 Leaderboard", width="stretch", type="primary" if st.session_state.current_view == 'leaderboard' else "secondary"):
         st.session_state.current_view = 'leaderboard'
         st.rerun()
 with col4:
-    if st.button("🔨 Auction", width=" stretch\, type="primary" if st.session_state.current_view == 'auction' else "secondary"):
+    if st.button("🔨 Auction", width="stretch", type="primary" if st.session_state.current_view == 'auction' else "secondary"):
         st.session_state.current_view = 'auction'
         st.rerun()
 with col5:
-    if st.button("📰 Scouting", width=" stretch\, type="primary" if st.session_state.current_view == 'scouting' else "secondary"):
+    if st.button("📰 Scouting", width="stretch", type="primary" if st.session_state.current_view == 'scouting' else "secondary"):
         st.session_state.current_view = 'scouting'
         st.rerun()
 
@@ -98,7 +98,7 @@ with st.sidebar:
     with st.expander("➕ Add New Player", expanded=False):
         category = st.selectbox("Category", ["Batsman", "Bowler", "All-rounder"], key="add_category")
         player_name = st.text_input("Player Name", key="add_player_name")
-        if st.button("Add to Database", width=" stretch\):
+        if st.button("Add to Database", width="stretch"):
             if player_name:
                 if st.session_state.team_builder.add_player_to_database(player_name, category):
                     st.success(f"✅ Added {player_name}")
@@ -119,7 +119,7 @@ with st.sidebar:
             edit_player = st.selectbox("Player", edit_players, key="edit_cum_player")
             current_rating = st.session_state.team_builder.all_players[edit_cat][edit_player]
             new_cum_rating = st.number_input("New Rating", min_value=0, max_value=5, value=current_rating, step=1, key="edit_cum_rating")
-            if st.button("💾 Update Rating", width=" stretch\):
+            if st.button("💾 Update Rating", width="stretch"):
                 st.session_state.team_builder.update_player_rating(edit_player, edit_cat, new_cum_rating)
                 st.success(f"Updated {edit_player} to {new_cum_rating}")
                 st.rerun()
@@ -162,11 +162,11 @@ if st.session_state.current_view == 'rating_manager':
     with col_info:
         st.info("Upload match reports to automatically calculate and update player ratings")
     with col_clear1:
-        if st.button("🗑️ Clear All Ratings", type="secondary", width=" stretch\):
+        if st.button("🗑️ Clear All Ratings", type="secondary", width="stretch"):
             st.session_state.show_clear_confirm = True
     with col_clear2:
         if st.session_state.get('show_clear_confirm', False):
-            if st.button("⚠️ Confirm", type="primary", width=" stretch\):
+            if st.button("⚠️ Confirm", type="primary", width="stretch"):
                 # Clear rating history
                 st.session_state.rating_system.rating_history = {}
                 st.session_state.rating_system._save_rating_history()
@@ -192,7 +192,7 @@ if st.session_state.current_view == 'rating_manager':
         bowling_pdf = st.file_uploader("Bowling Leaderboard PDF", type=['pdf'], key="bowling_pdf")
         mvp_pdf = st.file_uploader("MVP Leaderboard PDF", type=['pdf'], key="mvp_pdf")
         
-        if st.button("🔍 Parse & Calculate Ratings", type="primary", width=" stretch\):
+        if st.button("🔍 Parse & Calculate Ratings", type="primary", width="stretch"):
             if batting_pdf and bowling_pdf and mvp_pdf:
                 with st.spinner("Parsing PDFs..."):
                     batting_df = st.session_state.rating_system.parse_batting_pdf(batting_pdf)
@@ -224,15 +224,15 @@ if st.session_state.current_view == 'rating_manager':
             # Show all three tables
             st.markdown("**Batting Stats**")
             st.dataframe(st.session_state.parsed_data['batting'][['Player Name', 'Runs', 'SR', '4s', '6s']], 
-                        width=" stretch\, height=200)
+                        width="stretch", height=200)
             
             st.markdown("**Bowling Stats**")
             st.dataframe(st.session_state.parsed_data['bowling'][['Player Name', 'Wickets', 'Econ', 'Overs']], 
-                        width=" stretch\, height=200)
+                        width="stretch", height=200)
             
             st.markdown("**MVP Stats**")
             st.dataframe(st.session_state.parsed_data['mvp'][['Player Name', 'Total', 'Batting', 'Bowling']], 
-                        width=" stretch\, height=200)
+                        width="stretch", height=200)
     
     # Player mapping section
     if 'parsed_data' in st.session_state:
@@ -412,7 +412,7 @@ if st.session_state.current_view == 'rating_manager':
         st.markdown("---")
         col1, col2 = st.columns([5, 1])
         with col2:
-            if st.button("✅ Apply All Ratings", type="primary", width=" stretch\):
+            if st.button("✅ Apply All Ratings", type="primary", width="stretch"):
                 for update in rating_updates:
                     # Skip players not in the PDF (absent on match day)
                     pdf_name = update['pdf_name']
@@ -793,14 +793,14 @@ elif st.session_state.current_view == 'auction':
 
         col_start, col_reset = st.columns(2)
         with col_start:
-            if st.button("🚀 Start Auction", type="primary", width=" stretch\, key="start_auction_btn"):
+            if st.button("🚀 Start Auction", type="primary", width="stretch", key="start_auction_btn"):
                 if am.get_rounds():
                     am.start_auction()
                     st.rerun()
                 else:
                     st.warning("Add at least one round before starting")
         with col_reset:
-            if st.button("🔄 Reset All Rounds", width=" stretch\, key="reset_rounds_btn"):
+            if st.button("🔄 Reset All Rounds", width="stretch", key="reset_rounds_btn"):
                 am.data["config"]["rounds"] = []
                 am._save()
                 st.rerun()
@@ -852,12 +852,12 @@ elif st.session_state.current_view == 'auction':
             st.markdown("---")
             fc1, fc2, fc3 = st.columns(3)
             with fc1:
-                if st.button("💾 Save & Finish Auction", type="primary", width=" stretch\, key="finish_auc"):
+                if st.button("💾 Save & Finish Auction", type="primary", width="stretch", key="finish_auc"):
                     am.finish_auction()
                     st.success("Auction saved to history!")
                     st.rerun()
             with fc2:
-                if st.button("↩️ Undo Last Sale", width=" stretch\, key="undo_final"):
+                if st.button("↩️ Undo Last Sale", width="stretch", key="undo_final"):
                     ok, msg = am.undo_last_sale()
                     if ok:
                         st.success(msg)
@@ -865,7 +865,7 @@ elif st.session_state.current_view == 'auction':
                         st.warning(msg)
                     st.rerun()
             with fc3:
-                if st.button("🔄 Reset Auction", width=" stretch\, key="reset_auc"):
+                if st.button("🔄 Reset Auction", width="stretch", key="reset_auc"):
                     am.reset_auction()
                     st.rerun()
 
@@ -1179,19 +1179,19 @@ elif st.session_state.current_view == 'auction':
                 # Quick preset buttons
                 preset_col_a, preset_col_b, preset_col_c = st.columns(3)
                 with preset_col_a:
-                    if st.button("500", key=f"inc_500_{round_idx}", width=" stretch\):
+                    if st.button("500", key=f"inc_500_{round_idx}", width="stretch"):
                         am.set_bid_increment(500)
                         st.rerun()
                 with preset_col_b:
-                    if st.button("1000", key=f"inc_1000_{round_idx}", width=" stretch\):
+                    if st.button("1000", key=f"inc_1000_{round_idx}", width="stretch"):
                         am.set_bid_increment(1000)
                         st.rerun()
                 with preset_col_c:
-                    if st.button("2000", key=f"inc_2000_{round_idx}", width=" stretch\):
+                    if st.button("2000", key=f"inc_2000_{round_idx}", width="stretch"):
                         am.set_bid_increment(2000)
                         st.rerun()
             with inc_col3:
-                if st.button("✅ Set Increment", key=f"set_inc_{round_idx}", width=" stretch\):
+                if st.button("✅ Set Increment", key=f"set_inc_{round_idx}", width="stretch"):
                     am.set_bid_increment(live_increment)
                     st.success(f"Increment set to {live_increment:,} pts")
                     st.rerun()
@@ -1254,7 +1254,7 @@ elif st.session_state.current_view == 'auction':
                                 </div>
                             """, unsafe_allow_html=True)
                             st.button(f"❌ {team}", key=f"raise_{team}_{round_idx}",
-                                     width=" stretch\, disabled=True)
+                                     width="stretch", disabled=True)
                         elif not can_bid:
                             st.markdown(f"""
                                 <div style="background:#fffbeb;border-radius:8px;padding:6px;text-align:center;margin-bottom:4px;border:1px solid #fde68a;">
@@ -1263,7 +1263,7 @@ elif st.session_state.current_view == 'auction':
                                 </div>
                             """, unsafe_allow_html=True)
                             st.button(f"🚫 Limit reached", key=f"raise_{team}_{round_idx}",
-                                     width=" stretch\, disabled=True)
+                                     width="stretch", disabled=True)
                         else:
                             st.markdown(f"""
                                 <div style="background:#f0fdf4;border-radius:8px;padding:6px;text-align:center;margin-bottom:4px;border:1px solid #bbf7d0;">
@@ -1272,7 +1272,7 @@ elif st.session_state.current_view == 'auction':
                                 </div>
                             """, unsafe_allow_html=True)
                             if st.button(f"🖐️ {team} ({next_bid:,} pts)", key=f"raise_{team}_{round_idx}",
-                                        width=" stretch\):
+                                        width="stretch"):
                                 st.session_state[bid_key] = next_bid
                                 st.session_state[bidder_key] = team
                                 st.rerun()
@@ -1282,7 +1282,7 @@ elif st.session_state.current_view == 'auction':
                 with sell_col1:
                     if current_bidder:
                         if st.button(f"🔨 SOLD to {current_bidder} for {current_bid:,} pts!", type="primary",
-                                    width=" stretch\, key=f"sell_btn_{round_idx}"):
+                                    width="stretch", key=f"sell_btn_{round_idx}"):
                             ok, msg = am.sell_player(sel_player["name"], sel_player["category"],
                                                      current_bidder, current_bid, round_idx)
                             if ok:
@@ -1295,14 +1295,14 @@ elif st.session_state.current_view == 'auction':
                             st.rerun()
                     else:
                         st.button("🔨 SOLD (select a bidder first)", disabled=True,
-                                 width=" stretch\, key=f"sell_btn_{round_idx}")
+                                 width="stretch", key=f"sell_btn_{round_idx}")
                 with sell_col2:
-                    if st.button("🔄 Reset Bid", width=" stretch\, key=f"reset_bid_{round_idx}"):
+                    if st.button("🔄 Reset Bid", width="stretch", key=f"reset_bid_{round_idx}"):
                         st.session_state[bid_key] = r["base_price"]
                         st.session_state[bidder_key] = ""
                         st.rerun()
                 with sell_col3:
-                    if st.button("⏭️ Unsold / Skip", width=" stretch\, key=f"skip_bid_{round_idx}"):
+                    if st.button("⏭️ Unsold / Skip", width="stretch", key=f"skip_bid_{round_idx}"):
                         if bid_key in st.session_state:
                             del st.session_state[bid_key]
                         if bidder_key in st.session_state:
@@ -1373,15 +1373,15 @@ elif st.session_state.current_view == 'auction':
             nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
             with nav_col1:
                 if round_idx > 0:
-                    if st.button("⬅️ Previous Round", width=" stretch\, key="prev_round"):
+                    if st.button("⬅️ Previous Round", width="stretch", key="prev_round"):
                         am.prev_round()
                         st.rerun()
             with nav_col2:
-                if st.button("➡️ Next Round", width=" stretch\, type="primary", key="next_round"):
+                if st.button("➡️ Next Round", width="stretch", type="primary", key="next_round"):
                     am.next_round()
                     st.rerun()
             with nav_col3:
-                if st.button("↩️ Undo Last Sale", width=" stretch\, key="undo_sale"):
+                if st.button("↩️ Undo Last Sale", width="stretch", key="undo_sale"):
                     ok, msg = am.undo_last_sale()
                     if ok:
                         st.success(msg)
@@ -1389,7 +1389,7 @@ elif st.session_state.current_view == 'auction':
                         st.warning(msg)
                     st.rerun()
             with nav_col4:
-                if st.button("🛑 Cancel Auction", width=" stretch\, key="cancel_auc"):
+                if st.button("🛑 Cancel Auction", width="stretch", key="cancel_auc"):
                     am.reset_auction()
                     st.rerun()
 
@@ -1441,20 +1441,20 @@ elif st.session_state.current_view == 'team_builder':
         total_selected = st.session_state.team_builder.get_total_selected_players()
         st.markdown(f"**📋 Selected: {total_selected} players**")
     with col2:
-        if st.button("✅ All", width=" stretch\, key="select_all_btn"):
+        if st.button("✅ All", width="stretch", key="select_all_btn"):
             for cat in ["Batsman", "Bowler", "All-rounder"]:
                 for player in st.session_state.team_builder.all_players[cat].keys():
                     if player not in st.session_state.team_builder.selected_players[cat]:
                         st.session_state.team_builder.select_player(player, cat)
             st.rerun()
     with col3:
-        if st.button("❌ Clear", width=" stretch\, key="clear_all_btn"):
+        if st.button("❌ Clear", width="stretch", key="clear_all_btn"):
             st.session_state.team_builder.clear_selection()
             st.rerun()
     with col4:
         num_teams = st.number_input("Teams", min_value=2, max_value=10, value=2, key="num_teams_input", label_visibility="collapsed")
     with col5:
-        if st.button("🔀 Generate Teams", type="primary", width=" stretch\, key="generate_btn"):
+        if st.button("🔀 Generate Teams", type="primary", width="stretch", key="generate_btn"):
             if total_selected > 0:
                 st.session_state.team_builder.create_teams(num_teams)
                 st.session_state.teams_created = True
@@ -1550,11 +1550,11 @@ elif st.session_state.current_view == 'team_builder':
         with col1:
             st.markdown(f"**{len(teams)} teams created | Adjust if needed, then finalize to save**")
         with col2:
-            if st.button("🔄 Reshuffle", width=" stretch\, key="reshuffle_btn"):
+            if st.button("🔄 Reshuffle", width="stretch", key="reshuffle_btn"):
                 st.session_state.team_builder.create_teams(len(teams))
                 st.rerun()
         with col3:
-            if st.button("✅ Finalize", width=" stretch\, key="finalize_btn", type="primary"):
+            if st.button("✅ Finalize", width="stretch", key="finalize_btn", type="primary"):
                 if st.session_state.team_builder.finalize_teams():
                     st.success("Saved to history!")
                     st.rerun()
@@ -1644,11 +1644,11 @@ elif st.session_state.current_view == 'team_builder':
         
         col_btn1, col_btn2 = st.columns(2)
         with col_btn1:
-            if st.button("↔️ Move Player", width=" stretch\, key="move_player_btn", type="primary"):
+            if st.button("↔️ Move Player", width="stretch", key="move_player_btn", type="primary"):
                 st.session_state.team_builder.move_player(selected_player, from_team, to_team)
                 st.rerun()
         with col_btn2:
-            if st.button("🗑️ Remove Player", width=" stretch\, key="remove_player_btn", type="secondary"):
+            if st.button("🗑️ Remove Player", width="stretch", key="remove_player_btn", type="secondary"):
                 st.session_state.team_builder.remove_player_from_team(selected_player, from_team)
                 st.success(f"Removed {selected_player}")
                 st.rerun()
@@ -1667,7 +1667,7 @@ elif st.session_state.current_view == 'team_builder':
         with col4:
             st.write("")
             st.write("")
-            if st.button("🎲 Generate Schedule", width=" stretch\, key="generate_schedule_btn", type="primary"):
+            if st.button("🎲 Generate Schedule", width="stretch", key="generate_schedule_btn", type="primary"):
                 schedule = st.session_state.team_builder.generate_match_schedule(ground_hours, match_duration, start_time)
                 if schedule:
                     st.session_state.match_schedule = schedule

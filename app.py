@@ -15,7 +15,7 @@ if 'rating_system' not in st.session_state:
     st.session_state.rating_system = RatingSystem()
 if 'auction_manager' not in st.session_state:
     st.session_state.auction_manager = AuctionManager()
-if 'scouting_manager' not in st.session_state:
+if 'scouting_manager' not in st.session_state or not hasattr(st.session_state.scouting_manager, 'predict_match'):
     st.session_state.scouting_manager = ScoutingManager()
 if 'current_view' not in st.session_state:
     st.session_state.current_view = 'team_builder'
